@@ -10,14 +10,14 @@ import UsersTableHead from "./usersTable/usersTableHead";
 const Users = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
 
-  const [headers, setHeaders] = useState([
+  const headers = [
     "Имя",
     "Качества",
     "Профессия",
     "Встретился, раз",
     "Оценка",
     "", // для delete
-  ]);
+  ];
 
   const hadleUserDelete = (userId) => {
     setUsers((prevState) => prevState.filter(({ _id }) => _id !== userId));
