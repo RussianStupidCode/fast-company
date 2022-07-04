@@ -31,7 +31,6 @@ const Users = () => {
     if (userCount > 2 && userCount < 5) {
       return "человека тусанут с тобой";
     }
-
     return "человек тусанет с тобой";
   };
 
