@@ -23,14 +23,29 @@ const Users = () => {
     setUsers((prevState) => prevState.filter(({ _id }) => _id !== userId));
   };
 
-  if (users.length === 0) {
+  if (!users.length) {
     return <UsersNotAvailable text="Никто с тобой не тусанет" />;
   }
 
   const renderPhrase = (userCount) => {
-    if (userCount > 2 && userCount < 5) {
+    const stringNumber = String(userCount);
+
+    let number = userCount;
+    if (stringNumber.length > 2) {
+      number = Number(
+        stringNumber
+          .split("")
+          .slice(-2)
+          .join("")
+      );
+    }
+
+    const remainder = number % 10;
+
+    if (remainder > 1 && remainder < 5 && (number < 11 || number > 20)) {
       return "человека тусанут с тобой";
     }
+
     return "человек тусанет с тобой";
   };
 
