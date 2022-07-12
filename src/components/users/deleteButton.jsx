@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserDeleteButton = ({ onClick }) => {
+const deleteButton = ({ onClick }) => {
   return (
     <button type="button" className="btn btn-danger" onClick={onClick}>
       delete
@@ -8,4 +8,4 @@ const UserDeleteButton = ({ onClick }) => {
   );
 };
 
-export default UserDeleteButton;
+export default deleteButton;

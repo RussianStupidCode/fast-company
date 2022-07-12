@@ -1,6 +1,6 @@
 import React from "react";
 
-const UsersTableHead = ({ headers }) => {
+const TableHead = ({ headers }) => {
   return (
     <thead>
       <tr>
@@ -14,4 +14,4 @@ const UsersTableHead = ({ headers }) => {
   );
 };
 
-export default UsersTableHead;
+export default TableHead;
