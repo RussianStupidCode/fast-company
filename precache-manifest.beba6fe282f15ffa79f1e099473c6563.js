@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "54285d3d63cbe222d898",
+    "revision": "9d6bc4139e13c9dbbd13",
     "url": "/fast-company/static/css/main.d35a0f81.chunk.css"
   },
   {
-    "revision": "54285d3d63cbe222d898",
-    "url": "/fast-company/static/js/main.54285d3d.chunk.js"
+    "revision": "9d6bc4139e13c9dbbd13",
+    "url": "/fast-company/static/js/main.9d6bc413.chunk.js"
   },
   {
     "revision": "97af9aaba510c3e4c76e",
@@ -32,7 +32,7 @@ self.__precacheManifest = [
     "url": "/fast-company/static/media/bootstrap-icons.a6a4862c.woff"
   },
   {
-    "revision": "8d95baf3c7524a981b9f73d98fbc2741",
+    "revision": "91dcbeba536b446ab292320fd530f960",
     "url": "/fast-company/index.html"
   }
 ];

@@ -1,7 +1,7 @@
 {
   "main.css": "/fast-company/static/css/main.d35a0f81.chunk.css",
-  "main.js": "/fast-company/static/js/main.54285d3d.chunk.js",
-  "main.js.map": "/fast-company/static/js/main.54285d3d.chunk.js.map",
+  "main.js": "/fast-company/static/js/main.9d6bc413.chunk.js",
+  "main.js.map": "/fast-company/static/js/main.9d6bc413.chunk.js.map",
   "static/js/1.97af9aab.chunk.js": "/fast-company/static/js/1.97af9aab.chunk.js",
   "static/js/1.97af9aab.chunk.js.map": "/fast-company/static/js/1.97af9aab.chunk.js.map",
   "static/css/2.1913e55b.chunk.css": "/fast-company/static/css/2.1913e55b.chunk.css",
@@ -13,6 +13,6 @@
   "static/css/main.d35a0f81.chunk.css.map": "/fast-company/static/css/main.d35a0f81.chunk.css.map",
   "static/css/2.1913e55b.chunk.css.map": "/fast-company/static/css/2.1913e55b.chunk.css.map",
   "index.html": "/fast-company/index.html",
-  "precache-manifest.750e46291105e9c45999c10151dcf629.js": "/fast-company/precache-manifest.750e46291105e9c45999c10151dcf629.js",
+  "precache-manifest.beba6fe282f15ffa79f1e099473c6563.js": "/fast-company/precache-manifest.beba6fe282f15ffa79f1e099473c6563.js",
   "service-worker.js": "/fast-company/service-worker.js"
 }
