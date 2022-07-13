@@ -1,63 +1,24 @@
-import React, { useState } from "react";
-import api from "../api";
-import {
-  UsersAvailableCount,
-  UsersNotAvailable,
-} from "./usersTable/usersAvailableCount";
-import UsersTableBody from "./usersTable/usersTableBody";
-import UsersTableHead from "./usersTable/usersTableHead";
+import React from "react";
+import { renderPhrase } from "../utils";
+import { SearchStatus } from "./users/searchStatus";
+import TableBody from "./users/tableBody";
+import TableHead from "./users/tableHead";
 
-const Users = () => {
-  const [users, setUsers] = useState(api.users.fetchAll());
-
-  const headers = [
-    "Имя",
-    "Качества",
-    "Профессия",
-    "Встретился, раз",
-    "Оценка",
-    "", // для delete
-  ];
-
-  const hadleUserDelete = (userId) => {
-    setUsers((prevState) => prevState.filter(({ _id }) => _id !== userId));
-  };
-
+const Users = ({ headers, users, handlers }) => {
   if (!users.length) {
-    return <UsersNotAvailable text="Никто с тобой не тусанет" />;
+    return (
+      <SearchStatus count={users.length} text="Никто с тобой не тусанет" />
+    );
   }
 
-  const renderPhrase = (userCount) => {
-    const stringNumber = String(userCount);
-
-    let number = userCount;
-    if (stringNumber.length > 2) {
-      number = Number(
-        stringNumber
-          .split("")
-          .slice(-2)
-          .join("")
-      );
-    }
-
-    const remainder = number % 10;
-
-    if (remainder > 1 && remainder < 5 && (number < 11 || number > 20)) {
-      return "человека тусанут с тобой";
-    }
-
-    return "человек тусанет с тобой";
-  };
+  const text = renderPhrase(users.length);
 
   return (
     <>
-      <UsersAvailableCount
-        count={users.length}
-        text={renderPhrase(users.length)}
-      />
+      <SearchStatus count={users.length} text={text} />
       <table className="table m-0">
-        <UsersTableHead headers={headers} />
-        <UsersTableBody users={users} deleteButtonOnClick={hadleUserDelete} />
+        <TableHead headers={headers} />
+        <TableBody users={users} handlers={handlers} />
       </table>
     </>
   );
