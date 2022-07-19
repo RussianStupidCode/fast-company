@@ -1,18 +1,17 @@
 {
-  "main.css": "/fast-company/static/css/main.d35a0f81.chunk.css",
-  "main.js": "/fast-company/static/js/main.9d6bc413.chunk.js",
-  "main.js.map": "/fast-company/static/js/main.9d6bc413.chunk.js.map",
-  "static/js/1.97af9aab.chunk.js": "/fast-company/static/js/1.97af9aab.chunk.js",
-  "static/js/1.97af9aab.chunk.js.map": "/fast-company/static/js/1.97af9aab.chunk.js.map",
-  "static/css/2.1913e55b.chunk.css": "/fast-company/static/css/2.1913e55b.chunk.css",
-  "static/js/2.555d8a2d.chunk.js": "/fast-company/static/js/2.555d8a2d.chunk.js",
-  "static/js/2.555d8a2d.chunk.js.map": "/fast-company/static/js/2.555d8a2d.chunk.js.map",
-  "runtime~main.js": "/fast-company/static/js/runtime~main.b64f7231.js",
-  "runtime~main.js.map": "/fast-company/static/js/runtime~main.b64f7231.js.map",
-  "static/media/bootstrap-icons.css": "/fast-company/static/media/bootstrap-icons.a6a4862c.woff",
-  "static/css/main.d35a0f81.chunk.css.map": "/fast-company/static/css/main.d35a0f81.chunk.css.map",
-  "static/css/2.1913e55b.chunk.css.map": "/fast-company/static/css/2.1913e55b.chunk.css.map",
-  "index.html": "/fast-company/index.html",
-  "precache-manifest.beba6fe282f15ffa79f1e099473c6563.js": "/fast-company/precache-manifest.beba6fe282f15ffa79f1e099473c6563.js",
-  "service-worker.js": "/fast-company/service-worker.js"
+  "files": {
+    "main.css": "/fast-company/static/css/main.7215ee6a.css",
+    "main.js": "/fast-company/static/js/main.70fe8a5a.js",
+    "static/js/787.4d212c3f.chunk.js": "/fast-company/static/js/787.4d212c3f.chunk.js",
+    "static/media/bootstrap-icons.woff?": "/fast-company/static/media/bootstrap-icons.e559bf06bc84fd9525e6.woff",
+    "static/media/bootstrap-icons.woff2?": "/fast-company/static/media/bootstrap-icons.ea98e12d2d58747f9fc5.woff2",
+    "index.html": "/fast-company/index.html",
+    "main.7215ee6a.css.map": "/fast-company/static/css/main.7215ee6a.css.map",
+    "main.70fe8a5a.js.map": "/fast-company/static/js/main.70fe8a5a.js.map",
+    "787.4d212c3f.chunk.js.map": "/fast-company/static/js/787.4d212c3f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7215ee6a.css",
+    "static/js/main.70fe8a5a.js"
+  ]
 }
