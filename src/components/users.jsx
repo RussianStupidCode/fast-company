@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { renderPhrase } from "../utils/utils";
-import pagiante from "../utils/pagiante";
+import { paginate } from "../utils/paginate";
 import Pagiantion from "./pagination";
 import { SearchStatus } from "./users/searchStatus";
 import TableBody from "./users/tableBody";
 import TableHead from "./users/tableHead";
 
-const Users = ({ headers, users, handlers }) => {
+const Users = ({ headers, users, handlers, pages, pageSize, currentPage }) => {
     if (!users.length) {
         return (
             <SearchStatus
@@ -17,17 +17,9 @@ const Users = ({ headers, users, handlers }) => {
         );
     }
 
-    const pageSize = 4;
-
-    const [currentPage, setCurrentPage] = useState(1);
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
-
     const text = renderPhrase(users.length);
 
-    const usersForPage = pagiante(users, currentPage, pageSize);
-
+    const usersForPage = paginate(users, currentPage, pageSize);
     return (
         <>
             <SearchStatus count={users.length} text={text} />
@@ -36,10 +28,11 @@ const Users = ({ headers, users, handlers }) => {
                 <TableBody users={usersForPage} handlers={handlers} />
             </table>
             <Pagiantion
-                itemsCount={users.length}
-                pageSize={pageSize}
+                pages={pages}
                 currentPage={currentPage}
-                onPageChange={handlePageChange}
+                onPageChange={handlers.pagination.onPageChange}
+                onPageNext={handlers.pagination.onPagesNext}
+                onPagePrevious={handlers.pagination.onPagesPrevious}
             />
         </>
     );
@@ -48,7 +41,10 @@ const Users = ({ headers, users, handlers }) => {
 Users.propTypes = {
     headers: PropTypes.arrayOf(PropTypes.string).isRequired,
     users: PropTypes.arrayOf(PropTypes.object).isRequired,
-    handlers: PropTypes.objectOf(PropTypes.object).isRequired
+    pageSize: PropTypes.number.isRequired,
+    handlers: PropTypes.objectOf(PropTypes.object).isRequired,
+    currentPage: PropTypes.number.isRequired,
+    pages: PropTypes.arrayOf(PropTypes.number).isRequired
 };
 
 export default Users;

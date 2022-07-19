@@ -1,12 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import _ from "lodash";
 
-const Pagiantion = ({ itemsCount, currentPage, pageSize, onPageChange }) => {
-    const pageCount = Math.ceil(itemsCount / pageSize);
-    const pages = _.range(1, pageCount + 1);
-
-    if (pageCount === 1) {
+const Pagiantion = ({
+    currentPage,
+    pages,
+    onPageChange,
+    onPageNext,
+    onPagePrevious
+}) => {
+    if (pages.length === 1 && currentPage === 1) {
         return null;
     }
 
@@ -15,9 +17,14 @@ const Pagiantion = ({ itemsCount, currentPage, pageSize, onPageChange }) => {
     return (
         <nav className="d-flex justify-content-center">
             <ul className="pagination">
+                <li key={"previous"} className={"page-item"}>
+                    <button className="page-link" onClick={onPagePrevious}>
+                        previous
+                    </button>
+                </li>
                 {pages.map((page) => (
                     <li
-                        key={page}
+                        key={"page_" + page}
                         className={"page-item " + getActiveClass(page)}
                     >
                         <button
@@ -28,16 +35,22 @@ const Pagiantion = ({ itemsCount, currentPage, pageSize, onPageChange }) => {
                         </button>
                     </li>
                 ))}
+                <li key={"next"} className={"page-item"}>
+                    <button className="page-link" onClick={onPageNext}>
+                        next
+                    </button>
+                </li>
             </ul>
         </nav>
     );
 };
 
 Pagiantion.propTypes = {
-    itemsCount: PropTypes.number.isRequired,
     currentPage: PropTypes.number.isRequired,
-    pageSize: PropTypes.number.isRequired,
-    onPageChange: PropTypes.func.isRequired
+    pages: PropTypes.arrayOf(PropTypes.number).isRequired,
+    onPageChange: PropTypes.func.isRequired,
+    onPageNext: PropTypes.func.isRequired,
+    onPagePrevious: PropTypes.func.isRequired
 };
 
 export default Pagiantion;
