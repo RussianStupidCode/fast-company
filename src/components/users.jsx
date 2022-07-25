@@ -6,14 +6,33 @@ import Pagiantion from "./pagination";
 import { SearchStatus } from "./users/searchStatus";
 import TableBody from "./users/tableBody";
 import TableHead from "./users/tableHead";
+import GroupList from "./groupList";
 
-const Users = ({ headers, users, handlers, pages, pageSize, currentPage }) => {
+const Users = ({
+    headers,
+    users,
+    groupList,
+    handlers,
+    pages,
+    pageSize,
+    currentPage
+}) => {
     if (!users.length) {
         return (
-            <SearchStatus
-                count={users.length}
-                text="Никто с тобой не тусанет"
-            />
+            <div className="d-flex">
+                <GroupList
+                    items={groupList.professions}
+                    selectedItem={groupList.selectedItem}
+                    onItemSelect={handlers.groupList.onItemSelect}
+                    onClearSelect={handlers.groupList.onClearSelect}
+                />
+                <div className="d-flex flex-column flex-shrink-0">
+                    <SearchStatus
+                        count={users.length}
+                        text="Никто с тобой не тусанет"
+                    />
+                </div>
+            </div>
         );
     }
 
@@ -21,24 +40,34 @@ const Users = ({ headers, users, handlers, pages, pageSize, currentPage }) => {
 
     const usersForPage = paginate(users, currentPage, pageSize);
     return (
-        <>
-            <SearchStatus count={users.length} text={text} />
-            <table className="table m-1">
-                <TableHead headers={headers} />
-                <TableBody users={usersForPage} handlers={handlers} />
-            </table>
-            <Pagiantion
-                pages={pages}
-                currentPage={currentPage}
-                onPageChange={handlers.pagination.onPageChange}
-                onPageNext={handlers.pagination.onPagesNext}
-                onPagePrevious={handlers.pagination.onPagesPrevious}
+        <div className="d-flex">
+            <GroupList
+                items={groupList.professions}
+                selectedItem={groupList.selectedItem}
+                onItemSelect={handlers.groupList.onItemSelect}
+                onClearSelect={handlers.groupList.onClearSelect}
             />
-        </>
+
+            <div className="d-flex flex-column flex-shrink-0">
+                <SearchStatus count={users.length} text={text} />
+                <table className="table m-1">
+                    <TableHead headers={headers} />
+                    <TableBody users={usersForPage} handlers={handlers} />
+                </table>
+                <Pagiantion
+                    pages={pages}
+                    currentPage={currentPage}
+                    onPageChange={handlers.pagination.onPageChange}
+                    onPageNext={handlers.pagination.onPagesNext}
+                    onPagePrevious={handlers.pagination.onPagesPrevious}
+                />
+            </div>
+        </div>
     );
 };
 
 Users.propTypes = {
+    groupList: PropTypes.object.isRequired,
     headers: PropTypes.arrayOf(PropTypes.string).isRequired,
     users: PropTypes.arrayOf(PropTypes.object).isRequired,
     pageSize: PropTypes.number.isRequired,

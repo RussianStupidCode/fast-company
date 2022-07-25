@@ -14,7 +14,7 @@ export function getUserTableData(user) {
             },
             {
                 name: "profession",
-                value: user.profession.name
+                value: user.profession
             },
             {
                 name: "completedMeetings",

@@ -17,6 +17,10 @@ const TableCellFactory = ({ userId, name, value, handlers }) => {
         return <Qualities qualityList={value} />;
     }
 
+    if (name === "profession") {
+        return value.name;
+    }
+
     return value;
 };
 

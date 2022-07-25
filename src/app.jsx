@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Users from "./components/users";
 import api from "./api";
 import { getUserTableData, getUserValue } from "./utils/utils";
@@ -7,6 +7,7 @@ import {
     isChangePageForDelete,
     pagesForCurrentPage
 } from "./utils/paginate";
+import { getFilteredUsers } from "./utils/filter";
 
 const App = () => {
     const initalState = api.users
@@ -28,19 +29,44 @@ const App = () => {
     const pageSize = 4;
     const maxPageLists = 2;
 
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const [professions, setProfessions] = useState(api.professions.fetchAll());
+
+    const [selectedProfession, setSelectedProfession] = useState({});
+
+    const [filteredUsers, setFilteredUsers] = useState(
+        getFilteredUsers(users, "profession", selectedProfession)
+    );
+
+    useEffect(() => {
+        api.professions.fetchAll().then((data) => {
+            setProfessions(data);
+        });
+    }, []);
+
     const [pages, setPages] = useState(
         pagesForCurrentPage(
             1,
             maxPageLists,
-            allPageCount(users.length, pageSize)
+            allPageCount(filteredUsers.length, pageSize)
         )
     );
 
-    const [currentPage, setCurrentPage] = useState(1);
+    const repaginate = (newPageNumber, userCount) => {
+        const maxPageNumber = allPageCount(userCount, pageSize);
+        const pages = pagesForCurrentPage(
+            newPageNumber,
+            maxPageLists,
+            maxPageNumber
+        );
+        setPages(pages);
+        setCurrentPage(newPageNumber);
+    };
 
     const handlePageNext = () => {
         const pagesListIndex = Math.floor((currentPage - 1) / maxPageLists);
-        const maxPageNumber = allPageCount(users.length, pageSize);
+        const maxPageNumber = allPageCount(filteredUsers.length, pageSize);
         const maxPageListIndex = Math.floor((maxPageNumber - 1) / maxPageLists);
 
         if (pagesListIndex === maxPageListIndex) {
@@ -58,6 +84,15 @@ const App = () => {
         setPages(pages);
     };
 
+    const handleProfessionSelect = (item) => {
+        setSelectedProfession(item);
+
+        const newFilteredUsers = getFilteredUsers(users, "profession", item);
+        setFilteredUsers(newFilteredUsers);
+
+        repaginate(1, newFilteredUsers.length);
+    };
+
     const handlePagePrevious = () => {
         const pagesListIndex = Math.floor((currentPage - 1) / maxPageLists);
 
@@ -66,15 +101,7 @@ const App = () => {
         }
 
         const newPageNumber = (pagesListIndex - 1) * maxPageLists + 1;
-        const maxPageNumber = allPageCount(users.length, pageSize);
-        const pages = pagesForCurrentPage(
-            newPageNumber,
-            maxPageLists,
-            maxPageNumber
-        );
-
-        setCurrentPage(newPageNumber);
-        setPages(pages);
+        repaginate(newPageNumber, filteredUsers.length);
     };
 
     const handlePageChange = (pageNumber) => {
@@ -82,7 +109,7 @@ const App = () => {
     };
 
     const hadleUserDelete = (userId) => {
-        const count = users.length;
+        const count = filteredUsers.length;
 
         const newUsers = users.filter(({ _id }) => _id !== userId);
         setUsers(newUsers);
@@ -91,16 +118,16 @@ const App = () => {
 
         if (isChangePageForDelete(currentPage, pageSize, count)) {
             newPageNumber = currentPage - 1;
-            setCurrentPage(newPageNumber);
         }
 
-        const maxPageNumber = allPageCount(newUsers.length, pageSize);
-        const pages = pagesForCurrentPage(
-            newPageNumber,
-            maxPageLists,
-            maxPageNumber
+        const newFilteredUsers = getFilteredUsers(
+            newUsers,
+            "profession",
+            selectedProfession
         );
-        setPages(pages);
+        setFilteredUsers(newFilteredUsers);
+
+        repaginate(newPageNumber, newFilteredUsers.length);
     };
 
     const handleBookMarkChange = (userId) => {
@@ -110,6 +137,13 @@ const App = () => {
         bookmark.value = !bookmark.value;
 
         setUsers([...users]);
+    };
+
+    const handleClearFilter = () => {
+        setSelectedProfession({});
+        setFilteredUsers(users);
+
+        repaginate(1, users.length);
     };
 
     const handlers = {
@@ -123,13 +157,23 @@ const App = () => {
             onPagesPrevious: handlePagePrevious,
             onPageChange: handlePageChange,
             onPagesNext: handlePageNext
+        },
+        groupList: {
+            onItemSelect: handleProfessionSelect,
+            onClearSelect: handleClearFilter
         }
+    };
+
+    const groupList = {
+        professions,
+        selectedItem: selectedProfession
     };
 
     return (
         <Users
             headers={headers}
-            users={users}
+            users={filteredUsers}
+            groupList={groupList}
             pages={pages}
             handlers={handlers}
             pageSize={pageSize}
