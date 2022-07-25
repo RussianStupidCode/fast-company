@@ -13,7 +13,7 @@ const GroupList = ({
         return null;
     }
 
-    const values = Object.values(items);
+    const values = Array.isArray(items) ? items : Object.values(items);
 
     return (
         <div className="d-flex flex-column m-2">
@@ -45,7 +45,10 @@ GroupList.defaultProps = {
 };
 
 GroupList.propTypes = {
-    items: PropTypes.object,
+    items: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.arrayOf(PropTypes.object)
+    ]),
     valueProperty: PropTypes.string.isRequired,
     contentProperty: PropTypes.string.isRequired,
     onItemSelect: PropTypes.func.isRequired,

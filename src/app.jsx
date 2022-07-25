@@ -10,11 +10,7 @@ import {
 import { getFilteredUsers } from "./utils/filter";
 
 const App = () => {
-    const initalState = api.users
-        .fetchAll()
-        .map((user) => getUserTableData(user));
-
-    const [users, setUsers] = useState(initalState);
+    const [users, setUsers] = useState([]);
 
     const headers = [
         "Имя",
@@ -35,23 +31,7 @@ const App = () => {
 
     const [selectedProfession, setSelectedProfession] = useState({});
 
-    const [filteredUsers, setFilteredUsers] = useState(
-        getFilteredUsers(users, "profession", selectedProfession)
-    );
-
-    useEffect(() => {
-        api.professions.fetchAll().then((data) => {
-            setProfessions(data);
-        });
-    }, []);
-
-    const [pages, setPages] = useState(
-        pagesForCurrentPage(
-            1,
-            maxPageLists,
-            allPageCount(filteredUsers.length, pageSize)
-        )
-    );
+    const [filteredUsers, setFilteredUsers] = useState([]);
 
     const repaginate = (newPageNumber, userCount) => {
         const maxPageNumber = allPageCount(userCount, pageSize);
@@ -64,6 +44,22 @@ const App = () => {
         setCurrentPage(newPageNumber);
     };
 
+    useEffect(() => {
+        api.users.fetchAll().then((data) => {
+            const usersData = data.map((object) => getUserTableData(object));
+            setUsers(usersData);
+            setFilteredUsers(usersData);
+
+            repaginate(1, usersData.length);
+        });
+
+        api.professions.fetchAll().then((data) => {
+            setProfessions(data);
+        });
+    }, []);
+
+    const [pages, setPages] = useState([]);
+
     const handlePageNext = () => {
         const pagesListIndex = Math.floor((currentPage - 1) / maxPageLists);
         const maxPageNumber = allPageCount(filteredUsers.length, pageSize);
@@ -74,20 +70,18 @@ const App = () => {
         }
 
         const newPageNumber = (pagesListIndex + 1) * maxPageLists + 1;
-        const pages = pagesForCurrentPage(
-            newPageNumber,
-            maxPageLists,
-            maxPageNumber
-        );
-
-        setCurrentPage(newPageNumber);
-        setPages(pages);
+        repaginate(newPageNumber, filteredUsers.length);
     };
 
     const handleProfessionSelect = (item) => {
         setSelectedProfession(item);
 
-        const newFilteredUsers = getFilteredUsers(users, "profession", item);
+        const newFilteredUsers = getFilteredUsers(
+            users,
+            "profession",
+            item._id
+        );
+
         setFilteredUsers(newFilteredUsers);
 
         repaginate(1, newFilteredUsers.length);
@@ -123,7 +117,7 @@ const App = () => {
         const newFilteredUsers = getFilteredUsers(
             newUsers,
             "profession",
-            selectedProfession
+            selectedProfession._id
         );
         setFilteredUsers(newFilteredUsers);
 

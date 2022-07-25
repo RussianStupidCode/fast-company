@@ -1,8 +1,8 @@
 import { getUserValue } from "./utils";
 
-export function usersFilter(users, valueName, value) {
+export function usersFilter(users, valueName, content, property = "_id") {
     return users.filter(
-        (user) => getUserValue(user, valueName).value === value
+        (user) => getUserValue(user, valueName).value[property] === content
     );
 }
 

@@ -19,14 +19,14 @@ const Users = ({
 }) => {
     if (!users.length) {
         return (
-            <div className="d-flex">
+            <div className="d-flex p-0 m-0">
                 <GroupList
                     items={groupList.professions}
                     selectedItem={groupList.selectedItem}
                     onItemSelect={handlers.groupList.onItemSelect}
                     onClearSelect={handlers.groupList.onClearSelect}
                 />
-                <div className="d-flex flex-column flex-shrink-0">
+                <div className="d-flex flex-column flex-fill">
                     <SearchStatus
                         count={users.length}
                         text="Никто с тобой не тусанет"
@@ -40,7 +40,7 @@ const Users = ({
 
     const usersForPage = paginate(users, currentPage, pageSize);
     return (
-        <div className="d-flex">
+        <div className="d-flex w-100 p-0 m-0">
             <GroupList
                 items={groupList.professions}
                 selectedItem={groupList.selectedItem}
@@ -48,9 +48,9 @@ const Users = ({
                 onClearSelect={handlers.groupList.onClearSelect}
             />
 
-            <div className="d-flex flex-column flex-shrink-0">
+            <div className="d-flex flex-column flex-fill">
                 <SearchStatus count={users.length} text={text} />
-                <table className="table m-1">
+                <table className="table m-0">
                     <TableHead headers={headers} />
                     <TableBody users={usersForPage} handlers={handlers} />
                 </table>
