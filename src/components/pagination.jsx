@@ -15,7 +15,7 @@ const Pagiantion = ({
     const getActiveClass = (page) => (page === currentPage ? "active" : "");
 
     return (
-        <nav className="d-flex justify-content-center">
+        <nav className="d-flex justify-content-center mt-2">
             <ul className="pagination">
                 <li key={"previous"} className={"page-item"}>
                     <button className="page-link" onClick={onPagePrevious}>
